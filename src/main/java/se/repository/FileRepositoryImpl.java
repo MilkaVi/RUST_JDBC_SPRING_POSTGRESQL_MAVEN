@@ -65,9 +65,9 @@ public class FileRepositoryImpl implements FileRepository {
         if (id != 0)
             sql.append(" id = ").append(id.toString()).append(" and");
         if (!title.trim().isEmpty())
-            sql.append(" name = '").append(title).append("' and");
+            sql.append(" name = '").append(title.trim()).append("' and");
         if (!date.trim().isEmpty())
-            sql.append(" date = '").append(date).append("'");
+            sql.append(" date = '").append(date.trim()).append("'");
         if (sql.lastIndexOf("d") == sql.length()-1)
             sql.delete((sql.length()-4), sql.length());
         files.addAll(jdbcTemplate.query(sql.toString(), new FileMapping()));

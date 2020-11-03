@@ -1,0 +1,15 @@
+se\repository\FileRepository.class
+se\Mapping\UserMapping.class
+se\service\FileService.class
+se\service\FileServiceImpl.class
+se\Mapping\FileMapping.class
+se\repository\UserRepositoryImpl.class
+se\domain\User.class
+se\controllers\FileController.class
+se\repository\UserRepository.class
+se\config\MySpringMvcDispatcherSerlvetIntitializer.class
+se\Main.class
+se\config\SpringConfig.class
+se\config\BDconfig.class
+se\repository\FileRepositoryImpl.class
+se\domain\File.class

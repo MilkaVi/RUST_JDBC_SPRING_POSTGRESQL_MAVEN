@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>update</title>
+</head>
+<body>
+<form action="/update/{id}" method="POST">
+    <label>Id</label>
+    <input type="text" name = "id" th:value="${id}" required>
+
+    <label>Name</label>
+    <input type="text" name="title" required>
+    <label>Date</label>
+    <input type="text" name="price" required>
+    <input type="submit" value="update">
+</form>
+</body>
+</html>
