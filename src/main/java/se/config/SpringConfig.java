@@ -53,22 +53,6 @@ public class SpringConfig implements WebMvcConfigurer {
     }
 
 
-    @Bean
-    public JdbcTemplate getJdbcTemplate(){
-        return new JdbcTemplate(getDataSource());
-    }
-
-    @Bean
-    public DataSource getDataSource() {
-        DriverManagerDataSource driverManagerDataSource = new DriverManagerDataSource();
-        driverManagerDataSource.setUrl("jdbc:postgresql://localhost:5432/TEST_BD");
-        driverManagerDataSource.setUsername("root");
-        driverManagerDataSource.setPassword("4321rewq");
-        driverManagerDataSource.setDriverClassName("org.postgresql.Driver");
-        return driverManagerDataSource;
-    }
-
-
 
 
 }

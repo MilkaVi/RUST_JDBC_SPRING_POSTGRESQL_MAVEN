@@ -3,6 +3,7 @@ package se.repository;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.jdbc.core.JdbcTemplate;
 import se.Mapping.FileMapping;
+import se.config.BDconfig;
 import se.config.SpringConfig;
 import se.domain.File;
 
@@ -11,8 +12,9 @@ import java.util.List;
 
 public class FileRepositoryImpl implements FileRepository {
     private List<File> files = new ArrayList<File>();
-    public AnnotationConfigApplicationContext a = new AnnotationConfigApplicationContext(SpringConfig.class);
-    private JdbcTemplate jdbcTemplate = a.getBean(JdbcTemplate.class);
+    public AnnotationConfigApplicationContext a = new AnnotationConfigApplicationContext(BDconfig.class);
+    private JdbcTemplate jdbcTemplate = a.getBean("jdbc", JdbcTemplate.class);
+
     public FileRepositoryImpl() {
         String sql = "SELECT * FROM file";
         files.addAll(jdbcTemplate.query(sql, new FileMapping()));// UserMapping()- явно указать как парсить

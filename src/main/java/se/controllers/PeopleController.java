@@ -4,6 +4,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import se.domain.File;
+import se.service.FileService;
+import se.service.FileServiceImpl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,26 +13,13 @@ import java.util.List;
 @Controller
 public class PeopleController {
 
-
+    FileService fileRepository = new FileServiceImpl();
 
     @GetMapping()
     public String index(Model model) {
-        File file = new File();
-        file.setId(1);
-        file.setName("kolay");
-        file.setDate("999");
 
-        File file1 = new File();
-        file1.setId(2);
-        file1.setName("slava");
-        file1.setDate("111");
-
-        List<File> files = new ArrayList<>();
-
-        files.add(file);
-        files.add(file1);
-        model.addAttribute("files", files);
-        return "order";
+        model.addAttribute("files",fileRepository.getAll());
+        return "registration";
     }
 
 
