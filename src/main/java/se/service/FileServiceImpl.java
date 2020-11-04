@@ -37,8 +37,8 @@ public class FileServiceImpl implements FileService {
     }
 
     @Override
-    public List<File> select(Integer id, String title,String date) {
-        return fileRepository.select(id, title, date);
+    public List<File> select(Integer id,Integer user_id, String title,String date) {
+        return fileRepository.select(id, user_id, title, date);
     }
 
     @Override

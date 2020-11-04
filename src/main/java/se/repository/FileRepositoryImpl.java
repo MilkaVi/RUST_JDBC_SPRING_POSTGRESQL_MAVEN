@@ -24,8 +24,8 @@ public class FileRepositoryImpl implements FileRepository {
 
     public void save(File file) {
         jdbcTemplate.update(
-                "INSERT INTO file (id, name, date, file_user) VALUES (?, ?, ?, ?)",
-                file.getId(), file.getName(), file.getDate(), file.getFile_user()
+                "INSERT INTO file (user_id, name, date, file_user) VALUES (?, ?, ?, ?)",
+                file.getUser_id(), file.getName(), file.getDate(), file.getFile_user()
         );
         files.add(file);
     }
@@ -58,21 +58,21 @@ public class FileRepositoryImpl implements FileRepository {
 
     public void update(Integer id, String name,String date) {
 
-        jdbcTemplate.update("update file set name = ?, date = ?, id = ? where id = ?",  name, date, id, id);
+        jdbcTemplate.update("update file set name = ?, date = ?, user_id = ? where id = ?",  name, date, id, id);
 
         }
 
     @Override
-    public List<File> select(Integer id, String title,String date) {
+    public List<File> select(Integer id, Integer user_id,  String title,String date) {
         List<File> files = new ArrayList<File>();
         StringBuilder sql = new StringBuilder("select * from file");
         if (id == 0 && title.trim().isEmpty() && date.trim().isEmpty()){
             files.addAll(jdbcTemplate.query(sql.toString(), new FileMapping()));
             return files;
         }
-        sql.append(" where");
+        sql.append(" where file_user = ").append(id).append(" and");
         if (id != 0)
-            sql.append(" id = ").append(id.toString()).append(" and");
+            sql.append(" user_id = ").append(user_id.toString()).append(" and");
         if (!title.trim().isEmpty())
             sql.append(" name = '").append(title.trim()).append("' and");
         if (!date.trim().isEmpty())

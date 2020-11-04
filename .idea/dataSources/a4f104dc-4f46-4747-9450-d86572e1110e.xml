@@ -789,10 +789,10 @@ false Zulu
     <database id="2" parent="1" name="TEST_BD">
       <ObjectId>16415</ObjectId>
       <Owner>root</Owner>
-      <IntrospectionStateNumber>685</IntrospectionStateNumber>
+      <IntrospectionStateNumber>778</IntrospectionStateNumber>
       <Current>1</Current>
-      <Relations>sequence|table|16457|16459|1
-sequence|table|16556|16558|1
+      <Relations>sequence|table|24759|24761|1
+sequence|table|24770|24772|1
 </Relations>
     </database>
     <database id="3" parent="1" name="order">
@@ -861,7 +861,7 @@ sequence|table|16556|16558|1
       <Comment>standard public schema</Comment>
       <StateNumber>287</StateNumber>
       <Owner>postgres</Owner>
-      <IntrospectionStateNumber>686</IntrospectionStateNumber>
+      <IntrospectionStateNumber>779</IntrospectionStateNumber>
       <Current>1</Current>
     </schema>
     <access-method id="18" parent="2" name="heap">
@@ -938,109 +938,116 @@ sequence|table|16556|16558|1
       <DataType>bigint|0s</DataType>
     </sequence>
     <sequence id="31" parent="17" name="file_id_seq">
-      <ObjectId>16457</ObjectId>
+      <ObjectId>24770</ObjectId>
       <Owner>root</Owner>
-      <StateNumber>521</StateNumber>
+      <StateNumber>775</StateNumber>
       <DataType>integer|0s</DataType>
     </sequence>
     <sequence id="32" parent="17" name="usr_id_seq">
-      <ObjectId>16556</ObjectId>
+      <ObjectId>24759</ObjectId>
       <Owner>root</Owner>
-      <StateNumber>663</StateNumber>
-      <DataType>bigint|0s</DataType>
+      <StateNumber>767</StateNumber>
+      <DataType>integer|0s</DataType>
     </sequence>
     <table id="33" parent="17" name="file">
-      <ObjectId>16459</ObjectId>
-      <Outdated>1</Outdated>
+      <ObjectId>24772</ObjectId>
       <Owner>root</Owner>
-      <StateNumber>521</StateNumber>
+      <StateNumber>775</StateNumber>
     </table>
     <table id="34" parent="17" name="usr">
-      <ObjectId>16558</ObjectId>
+      <ObjectId>24761</ObjectId>
       <Owner>root</Owner>
-      <StateNumber>663</StateNumber>
+      <StateNumber>767</StateNumber>
     </table>
     <column id="35" parent="33" name="id">
       <Position>1</Position>
       <DataType>integer|0s</DataType>
       <NotNull>1</NotNull>
-      <StateNumber>521</StateNumber>
+      <StateNumber>775</StateNumber>
       <DefaultExpression>nextval(&apos;file_id_seq&apos;::regclass)</DefaultExpression>
       <TypeId>23</TypeId>
     </column>
-    <column id="36" parent="33" name="name">
+    <column id="36" parent="33" name="user_id">
       <Position>2</Position>
-      <DataType>varchar(255)|0s</DataType>
+      <DataType>integer|0s</DataType>
       <NotNull>1</NotNull>
-      <StateNumber>521</StateNumber>
-      <TypeId>1043</TypeId>
+      <StateNumber>775</StateNumber>
+      <TypeId>23</TypeId>
     </column>
-    <column id="37" parent="33" name="date">
-      <Position>3</Position>
-      <DataType>varchar(255)|0s</DataType>
-      <NotNull>1</NotNull>
-      <StateNumber>521</StateNumber>
-      <TypeId>1043</TypeId>
-    </column>
-    <index id="38" parent="33" name="file_id_uindex">
-      <ObjectId>16466</ObjectId>
-      <StateNumber>522</StateNumber>
-      <ColNames>id</ColNames>
-      <Unique>1</Unique>
-    </index>
-    <index id="39" parent="33" name="file_pk">
-      <ObjectId>16467</ObjectId>
-      <StateNumber>523</StateNumber>
-      <ColNames>id</ColNames>
-      <Unique>1</Unique>
-      <Primary>1</Primary>
-    </index>
-    <key id="40" parent="33" name="file_pk">
-      <ObjectId>16468</ObjectId>
-      <StateNumber>523</StateNumber>
-      <ColNames>id</ColNames>
-      <Primary>1</Primary>
-      <UnderlyingIndexName>file_pk</UnderlyingIndexName>
-    </key>
-    <column id="41" parent="34" name="id">
-      <Position>1</Position>
-      <DataType>bigint|0s</DataType>
-      <NotNull>1</NotNull>
-      <StateNumber>663</StateNumber>
-      <DefaultExpression>nextval(&apos;usr_id_seq&apos;::regclass)</DefaultExpression>
-      <TypeId>20</TypeId>
-    </column>
-    <column id="42" parent="34" name="login">
-      <Position>2</Position>
-      <DataType>varchar|0s</DataType>
-      <NotNull>1</NotNull>
-      <StateNumber>663</StateNumber>
-      <TypeId>1043</TypeId>
-    </column>
-    <column id="43" parent="34" name="password">
+    <column id="37" parent="33" name="name">
       <Position>3</Position>
       <DataType>varchar|0s</DataType>
       <NotNull>1</NotNull>
-      <StateNumber>663</StateNumber>
+      <StateNumber>775</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="44" parent="34" name="role">
+    <column id="38" parent="33" name="date">
       <Position>4</Position>
       <DataType>varchar|0s</DataType>
       <NotNull>1</NotNull>
-      <StateNumber>663</StateNumber>
+      <StateNumber>775</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <index id="45" parent="34" name="usr_pkey">
-      <ObjectId>16565</ObjectId>
-      <StateNumber>663</StateNumber>
+    <column id="39" parent="33" name="file_user">
+      <Position>5</Position>
+      <DataType>integer|0s</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>775</StateNumber>
+      <TypeId>23</TypeId>
+    </column>
+    <index id="40" parent="33" name="file_pkey">
+      <ObjectId>24779</ObjectId>
+      <StateNumber>775</StateNumber>
       <ColNames>id</ColNames>
       <Unique>1</Unique>
       <Primary>1</Primary>
     </index>
-    <key id="46" parent="34" name="usr_pkey">
-      <ObjectId>16566</ObjectId>
-      <StateNumber>663</StateNumber>
+    <key id="41" parent="33" name="file_pkey">
+      <ObjectId>24780</ObjectId>
+      <StateNumber>775</StateNumber>
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>file_pkey</UnderlyingIndexName>
+    </key>
+    <column id="42" parent="34" name="id">
+      <Position>1</Position>
+      <DataType>integer|0s</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>767</StateNumber>
+      <DefaultExpression>nextval(&apos;usr_id_seq&apos;::regclass)</DefaultExpression>
+      <TypeId>23</TypeId>
+    </column>
+    <column id="43" parent="34" name="login">
+      <Position>2</Position>
+      <DataType>varchar|0s</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>767</StateNumber>
+      <TypeId>1043</TypeId>
+    </column>
+    <column id="44" parent="34" name="password">
+      <Position>3</Position>
+      <DataType>varchar|0s</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>767</StateNumber>
+      <TypeId>1043</TypeId>
+    </column>
+    <column id="45" parent="34" name="role">
+      <Position>4</Position>
+      <DataType>varchar|0s</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>767</StateNumber>
+      <TypeId>1043</TypeId>
+    </column>
+    <index id="46" parent="34" name="usr_pkey">
+      <ObjectId>24768</ObjectId>
+      <StateNumber>767</StateNumber>
+      <ColNames>id</ColNames>
+      <Unique>1</Unique>
+      <Primary>1</Primary>
+    </index>
+    <key id="47" parent="34" name="usr_pkey">
+      <ObjectId>24769</ObjectId>
+      <StateNumber>767</StateNumber>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
       <UnderlyingIndexName>usr_pkey</UnderlyingIndexName>

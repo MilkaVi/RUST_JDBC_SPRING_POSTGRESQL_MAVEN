@@ -99,7 +99,7 @@ public class FileUserController {
     public String addNewOrder(@RequestParam(value = "id") int id, @RequestParam(value = "title") String title,
                               @RequestParam(value = "price") String date, @RequestParam(value = "file_user") int file_user, Model model) {
         File order = new File();
-        order.setId(id);
+        order.setUser_id(id);
         order.setName(title);
         order.setDate(date);
         order.setFile_user(file_user);
@@ -138,12 +138,22 @@ public class FileUserController {
         return "order";
     }
 
-    @GetMapping("/select")
-    public String getOrderFilter(@RequestParam(value = "id", required = false, defaultValue = "0") String id,
+    @GetMapping("/select/{id}")
+    public String getOrderFilter(@RequestParam(value = "id", required = false) String id,
+                                 @RequestParam(value = "user_id", required = false) String user_id,
                                  @RequestParam(value = "title", required = false) String title,
                                  @RequestParam(value = "date", required = false) String date, Model model) {
 
-        model.addAttribute("files", fileRepository.select(Integer.valueOf(id), title, date));
+        if(fileRepository.getById(Integer.valueOf(id)).getFile_user().equals("admin")) {
+            // select empty???
+            model.addAttribute("files", fileRepository.select(Integer.valueOf(id),Integer.valueOf(user_id), title, date));
+            model.addAttribute("id",Integer.valueOf(id));
+        }
+        else
+        {
+            model.addAttribute("files", fileRepository.select(Integer.valueOf(id),Integer.valueOf(user_id), title, date));
+            model.addAttribute("id", Integer.valueOf(id));
+        }
         return "order";
     }
 
