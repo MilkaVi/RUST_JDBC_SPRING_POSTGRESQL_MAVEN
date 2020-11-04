@@ -32,8 +32,8 @@ public class FileServiceImpl implements FileService {
         return null;
     }
 
-    public void update(Integer id, String title,String date) {
-        fileRepository.update(id,title,date);
+    public void update(Integer id,Integer user_id, String title,String date) {
+        fileRepository.update(id,user_id,title,date);
     }
 
     @Override

@@ -7,8 +7,9 @@
 <body>
 <form action="/update/{id}" method="POST">
     <label>Id</label>
-    <input type="text" name = "id" th:value="${id}" required>
+    <input type="text" name = "user_id" required>
 
+    <input type="hidden" name="id"  th:value="${id}"></input>
     <label>Name</label>
     <input type="text" name="title" required>
     <label>Date</label>

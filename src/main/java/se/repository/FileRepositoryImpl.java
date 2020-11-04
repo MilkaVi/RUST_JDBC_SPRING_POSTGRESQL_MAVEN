@@ -45,7 +45,6 @@ public class FileRepositoryImpl implements FileRepository {
     @Override
     public List<File> getAllById(Integer id) {
         List<File> file = new ArrayList<File>();
-        System.out.println("===============getAll");
         String sql = "SELECT * FROM file where file_user = " + id.toString();
         file.addAll(jdbcTemplate.query(sql, new FileMapping()));// UserMapping()- явно указать как парсить
         return file;
@@ -56,29 +55,29 @@ public class FileRepositoryImpl implements FileRepository {
         return jdbcTemplate.query(sql, new FileMapping()).get(0);
     }
 
-    public void update(Integer id, String name,String date) {
+    public void update(Integer id,Integer user_id, String name,String date) {
 
-        jdbcTemplate.update("update file set name = ?, date = ?, user_id = ? where id = ?",  name, date, id, id);
+        jdbcTemplate.update("update file set name = ?, date = ?, user_id = ? where id = ?",  name, date, id, user_id);
 
         }
 
     @Override
     public List<File> select(Integer id, Integer user_id,  String title,String date) {
         List<File> files = new ArrayList<File>();
-        StringBuilder sql = new StringBuilder("select * from file");
-        if (id == 0 && title.trim().isEmpty() && date.trim().isEmpty()){
+        StringBuilder sql = new StringBuilder("select * from file where file_user = ").append(id);
+        if (user_id == 0 && title.trim().isEmpty() && date.trim().isEmpty()){
             files.addAll(jdbcTemplate.query(sql.toString(), new FileMapping()));
             return files;
         }
-        sql.append(" where file_user = ").append(id).append(" and");
-        if (id != 0)
-            sql.append(" user_id = ").append(user_id.toString()).append(" and");
+        if (user_id != 0)
+            sql.append(" and user_id = ").append(user_id.toString());
         if (!title.trim().isEmpty())
-            sql.append(" name = '").append(title.trim()).append("' and");
+            sql.append(" and name = '").append(title.trim()).append("'");
         if (!date.trim().isEmpty())
-            sql.append(" date = '").append(date.trim()).append("'");
+            sql.append(" and date = '").append(date.trim()).append("'");
         if (sql.lastIndexOf("d") == sql.length()-1)
             sql.delete((sql.length()-4), sql.length());
+
         files.addAll(jdbcTemplate.query(sql.toString(), new FileMapping()));
         return files;
     }

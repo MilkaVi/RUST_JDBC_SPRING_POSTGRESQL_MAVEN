@@ -38,9 +38,9 @@
             <td th:utext="${file.getUser_id()}"></td>
             <td th:utext="${file.getName()}"></td>
             <td th:utext="${file.getDate()}"></td>
-            <td><a th:href="@{/delete/{id}(id=${file.getUser_id()})}">Delete this file</a></td>
+            <td><a th:href="@{/delete/{id}(id=${file.getId()})}">Delete this file</a></td>
 
-            <td><a th:href="@{/update/{id}(id=${file.getUser_id()})}">Update this file</a></td>
+            <td><a th:href="@{/update/{id}(id=${file.getId()})}">Update this file</a></td>
 
             <td></td>
         </tr>
