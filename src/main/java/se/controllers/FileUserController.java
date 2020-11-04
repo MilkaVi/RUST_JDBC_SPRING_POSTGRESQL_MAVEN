@@ -136,8 +136,9 @@ public class FileUserController {
     @GetMapping("/delete/{id}")
     public String deleteItem(@PathVariable Integer id, Model model) {
         //File order = fileRepository.getById(id);
+        int oldId = fileRepository.getById(id).getFile_user();
         fileRepository.delete(id);
-        model.addAttribute("files", fileRepository.getAll());
+        model.addAttribute("files", fileRepository.getAllById(oldId));
         return "order";
     }
 
@@ -146,6 +147,7 @@ public class FileUserController {
                                  @RequestParam(value = "user_id", required = false, defaultValue = "0") String user_id,
                                  @RequestParam(value = "title", required = false) String title,
                                  @RequestParam(value = "date", required = false) String date, Model model) {
+        System.out.println("1=" + id + " 2=" + user_id + " 3=" + title + " 4="+ date);
 
         if (fileRepository.getById(Integer.valueOf(id)).getFile_user().equals("admin")) {
             // select empty???
