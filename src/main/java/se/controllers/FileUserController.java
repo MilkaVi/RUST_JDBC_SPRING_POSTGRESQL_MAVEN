@@ -129,6 +129,7 @@ public class FileUserController {
         // id
         // admin
         fileRepository.update(user_id, id, title, date);
+        model.addAttribute("id",id);
         model.addAttribute("files", fileRepository.getAllById(fileRepository.getById(id).getFile_user()));
         return "order"; // команда, которая сделает перенаправление на другой урл
     }
@@ -147,9 +148,12 @@ public class FileUserController {
                                  @RequestParam(value = "user_id", required = false, defaultValue = "0") String user_id,
                                  @RequestParam(value = "title", required = false) String title,
                                  @RequestParam(value = "date", required = false) String date, Model model) {
+
+        // id - number user
+
         System.out.println("1=" + id + " 2=" + user_id + " 3=" + title + " 4="+ date);
 
-        if (fileRepository.getById(Integer.valueOf(id)).getFile_user().equals("admin")) {
+        if (users.getByFileUser(Integer.valueOf(id)).getRole().equals("admin")) {
             // select empty???
             model.addAttribute("files", fileRepository.select(Integer.valueOf(id), Integer.valueOf(user_id), title, date));
             model.addAttribute("id", Integer.valueOf(id));

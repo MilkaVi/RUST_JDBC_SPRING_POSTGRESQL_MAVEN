@@ -78,6 +78,7 @@ public class FileRepositoryImpl implements FileRepository {
         if (sql.lastIndexOf("d") == sql.length()-1)
             sql.delete((sql.length()-4), sql.length());
 
+        System.out.println("1=" + id + " 2=" + user_id + " 3=" + title + " 4="+ date);
         files.addAll(jdbcTemplate.query(sql.toString(), new FileMapping()));
         return files;
     }
