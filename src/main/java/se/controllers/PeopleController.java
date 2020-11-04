@@ -2,11 +2,10 @@ package se.controllers;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import se.domain.File;
+import se.repository.UserRepository;
+import se.repository.UserRepositoryImpl;
 import se.service.FileService;
 import se.service.FileServiceImpl;
 
@@ -17,14 +16,37 @@ import java.util.List;
 public class PeopleController {
 
     FileService fileRepository = new FileServiceImpl();
+    UserRepository users = new UserRepositoryImpl();
+
 
     @GetMapping()
-    public String index(Model model) {
-
-        model.addAttribute("files",fileRepository.getAll());
-        return "order";
+    public String index() {
+        return "login";
     }
 
+    @PostMapping("/login")
+    public String signIn(Model model, @RequestParam(value = "login") String login,
+                         @RequestParam(value = "password") String password){
+
+        if(users.getByLogPass(login.trim(),password.trim()) == null){
+            return "registration";
+        }
+        else{
+            //проверка админ или юзер
+            //когда залогинился юзер создавать новую таблицу или все файлы будут в одной?
+            //если в одной то как быть с одинаковыми полями(id)
+            //где хранить индексы файлов
+            //лучше создавать  для каждого пользоваетлся новую таблицу
+            model.addAttribute("orderList", fileRepository.getAll());
+            return "order";
+        }
+    }
+
+    @GetMapping("/order")
+    public String getOrderPage(Model model) {
+        model.addAttribute("files", fileRepository.getAll());
+        return "order";
+    }
 
 
     @GetMapping("/add-new-order")

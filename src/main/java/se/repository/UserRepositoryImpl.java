@@ -4,6 +4,7 @@ package se.repository;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.jdbc.core.JdbcTemplate;
 import se.Mapping.UserMapping;
+import se.config.BDconfig;
 import se.config.SpringConfig;
 import se.domain.User;
 
@@ -13,9 +14,9 @@ import java.util.List;
 public class UserRepositoryImpl implements UserRepository {
     private List<User> users = new ArrayList<User>();
 
-    public AnnotationConfigApplicationContext a = new AnnotationConfigApplicationContext(SpringConfig.class);
+    public AnnotationConfigApplicationContext a = new AnnotationConfigApplicationContext(BDconfig.class);
 
-    private JdbcTemplate jdbcTemplate = a.getBean(JdbcTemplate.class);
+    private JdbcTemplate jdbcTemplate = a.getBean("jdbc", JdbcTemplate.class);
 
     public UserRepositoryImpl() {
         String sql = "SELECT * FROM usr";
