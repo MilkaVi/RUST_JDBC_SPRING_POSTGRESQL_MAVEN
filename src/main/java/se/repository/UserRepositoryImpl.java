@@ -27,8 +27,8 @@ public class UserRepositoryImpl implements UserRepository {
 
     public void save(User user) {
         jdbcTemplate.update(
-                "INSERT INTO usr (id, login, password, role) VALUES (?, ?, ?, ?)",
-                user.getId(), user.getLogin(), user.getPassword(), user.getRole()
+                "INSERT INTO usr (login, password, role) VALUES ( ?, ?, ?)",
+                 user.getLogin(), user.getPassword(), user.getRole()
         );
         users.add(user);
     }
@@ -44,12 +44,6 @@ public class UserRepositoryImpl implements UserRepository {
         return user;
     }
 
-    public User getByLog(String login) {
-        String sql = "select * from usr where login = '" + login + "'";
-        if (jdbcTemplate.query(sql, new UserMapping()).isEmpty())
-            return null;
-        return jdbcTemplate.query(sql, new UserMapping()).get(0);
-    }
 
     @Override
     public User getByLogPass(String login, String password) {
@@ -57,6 +51,23 @@ public class UserRepositoryImpl implements UserRepository {
         if (jdbcTemplate.query(sql, new UserMapping()).isEmpty())
             return null;
         return jdbcTemplate.query(sql, new UserMapping()).get(0);
+    }
+
+    @Override
+    public User getByFileUser(Integer id) {
+        String sql = "select * from usr where id = " + id;
+        if (jdbcTemplate.query(sql, new UserMapping()).isEmpty())
+            return null;
+        return jdbcTemplate.query(sql, new UserMapping()).get(0);
+    }
+
+    @Override
+    public Integer getId(User user) {
+        String sql = "select * from usr where login = '" + user.getLogin()+ "'and password =  '" + user.getPassword() + "'";
+
+        if (jdbcTemplate.query(sql, new UserMapping()).isEmpty())
+            return null;
+        return jdbcTemplate.query(sql, new UserMapping()).get(0).getId();
     }
 
 

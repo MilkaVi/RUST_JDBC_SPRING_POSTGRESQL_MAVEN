@@ -11,7 +11,10 @@ public interface UserRepository {
 
     List<User> getAll();
 
-    User getByLog(String login);
-
     User getByLogPass(String login, String password);
+
+    User getByFileUser(Integer id);
+
+    Integer getId(User user);
+
 }

@@ -9,12 +9,6 @@ public class User {
     private String login;
     private String password;
     private String role;
-    private static int countUser = 1;
-
-    public User() {
-        this.id = countUser;
-        countUser++;
-    }
 
     public String getRole() {
         return role;
@@ -24,12 +18,12 @@ public class User {
         this.role = role;
     }
 
-    public Integer getId() {
-        return id;
-    }
-
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public Integer getId() {
+        return id;
     }
 
     public String getLogin() {

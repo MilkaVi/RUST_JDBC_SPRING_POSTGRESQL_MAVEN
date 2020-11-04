@@ -9,6 +9,7 @@ import se.repository.UserRepository;
 import se.repository.UserRepositoryImpl;
 import se.service.FileService;
 import se.service.FileServiceImpl;
+import sun.security.util.Password;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,16 +33,30 @@ public class FileUserController {
         if (users.getByLogPass(login.trim(), password.trim()) == null) {
             return "registration";
         } else {
+
+            int id =    users.getId(users.getByLogPass(login, password));
+
+            if (users.getByLogPass(login, password).getRole().equals("admin")) {
+                //for admin
+
+                model.addAttribute("files", fileRepository.getAll());
+                model.addAttribute("id", id);
+                return "order";
+            } else {
+                // for users
+
+                model.addAttribute("files", fileRepository.getAllById(id));
+                model.addAttribute("id", id);
+                return "order";
+            }
+
             //проверка админ или юзер
             //когда залогинился юзер создавать новую таблицу или все файлы будут в одной?
             //если в одной то как быть с одинаковыми полями(id)
             //где хранить индексы файлов
             //лучше создавать  для каждого пользоваетлся новую таблицу
-            model.addAttribute("files", fileRepository.getAll());
-            return "order";
         }
     }
-
 
     @GetMapping("/registration")
     public String registration() {
@@ -52,20 +67,21 @@ public class FileUserController {
     public String addUser(@RequestParam(value = "login") String login,
                           @RequestParam(value = "password") String password,
                           Model model) {
-        User userFromDB = users.getByLog(login.trim());
+        User userFromDB = users.getByLogPass(login.trim(),password.trim());
         if (userFromDB == null) {
-            User user = new User();
-            user.setLogin(login.trim());
-            user.setPassword(password.trim());
-            user.setRole("user");
-            users.save(user);
+            userFromDB = new User();
+            userFromDB.setLogin(login.trim());
+            userFromDB.setPassword(password.trim());
+            userFromDB.setRole("user");
+            users.save(userFromDB);
         }
 
-        model.addAttribute("files", fileRepository.getAll());
+        model.addAttribute("files", fileRepository.getAllById(users.getId(userFromDB)));
+        model.addAttribute("id", users.getId(userFromDB));
         return "order";
     }
 
-
+    // ===== ????????????
     @GetMapping("/order")
     public String getOrderPage(Model model) {
         model.addAttribute("files", fileRepository.getAll());
@@ -73,20 +89,29 @@ public class FileUserController {
     }
 
 
-    @GetMapping("/add-new-order")
-    public String addNewOrderPage(Model model) {
+    @GetMapping("/add-new-order/{id}")
+    public String addNewOrderPage(@PathVariable Integer id, Model model) {
+        model.addAttribute("id", id);
         return "addNewOrder";
     }
 
-    @PostMapping("/add-new-order")
+    @PostMapping("/add-new-order/{id}")
     public String addNewOrder(@RequestParam(value = "id") int id, @RequestParam(value = "title") String title,
-                              @RequestParam(value = "price") String date, Model model) {
+                              @RequestParam(value = "price") String date, @RequestParam(value = "file_user") int file_user, Model model) {
         File order = new File();
         order.setId(id);
         order.setName(title);
         order.setDate(date);
+        order.setFile_user(file_user);
+        System.out.println(order.getFile_user()+ " id_user=" + file_user);
         fileRepository.save(order);
-        model.addAttribute("files", fileRepository.getAll());
+        if (users.getByFileUser(file_user).getRole().equals("admin")) {
+            model.addAttribute("files", fileRepository.getAll());
+        } else {
+
+            model.addAttribute("files", fileRepository.getAllById(file_user));
+            model.addAttribute("id", file_user);
+        }
         return "order"; // команда, которая сделает перенаправление на другой урл
     }
 

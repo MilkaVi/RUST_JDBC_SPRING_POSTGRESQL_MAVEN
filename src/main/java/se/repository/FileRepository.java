@@ -12,6 +12,9 @@ public interface FileRepository {
 
     List<File> getAll();
 
+    List<File> getAllById(Integer id);
+
+
     File getById(Integer id);
 
     void update(Integer id, String title, String date);

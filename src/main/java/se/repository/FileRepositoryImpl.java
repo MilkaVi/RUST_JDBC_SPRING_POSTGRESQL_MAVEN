@@ -24,8 +24,8 @@ public class FileRepositoryImpl implements FileRepository {
 
     public void save(File file) {
         jdbcTemplate.update(
-                "INSERT INTO file (id, name, date) VALUES (?, ?, ?)",
-                file.getId(), file.getName(), file.getDate()
+                "INSERT INTO file (id, name, date, file_user) VALUES (?, ?, ?, ?)",
+                file.getId(), file.getName(), file.getDate(), file.getFile_user()
         );
         files.add(file);
     }
@@ -38,6 +38,15 @@ public class FileRepositoryImpl implements FileRepository {
     public List<File> getAll() {
         List<File> file = new ArrayList<File>();
         String sql = "SELECT * FROM file";
+        file.addAll(jdbcTemplate.query(sql, new FileMapping()));// UserMapping()- явно указать как парсить
+        return file;
+    }
+
+    @Override
+    public List<File> getAllById(Integer id) {
+        List<File> file = new ArrayList<File>();
+        System.out.println("===============getAll");
+        String sql = "SELECT * FROM file where file_user = " + id.toString();
         file.addAll(jdbcTemplate.query(sql, new FileMapping()));// UserMapping()- явно указать как парсить
         return file;
     }

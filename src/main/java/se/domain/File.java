@@ -4,6 +4,15 @@ public class File {
     private Integer id;
     private String name;
     private String date;
+    private Integer file_user;
+
+    public Integer getFile_user() {
+        return file_user;
+    }
+
+    public void setFile_user(Integer file_user) {
+        this.file_user = file_user;
+    }
 
     public Integer getId() {
         return id;
@@ -35,6 +44,7 @@ public class File {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", date='" + date + '\'' +
+                ", file_user=" + file_user +
                 '}';
     }
 }

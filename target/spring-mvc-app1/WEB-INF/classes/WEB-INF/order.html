@@ -46,7 +46,7 @@
         </tr>
 
 </table>
-<a href="/add-new-order">Add new file</a>
+<a th:href="@{/add-new-order/{id}(id=${id})}">Add new file</a>
 
 <form action="/select">
     <input type="hidden" name="_csrf" value="${_csrf.token}"/>

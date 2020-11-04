@@ -17,4 +17,6 @@ public interface FileService {
     void update(Integer id, String title,String date);
 
     List<File> select(Integer id, String title,String date);
+
+    List<File> getAllById(Integer id);
 }

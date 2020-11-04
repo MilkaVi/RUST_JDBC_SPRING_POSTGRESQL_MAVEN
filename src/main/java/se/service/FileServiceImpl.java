@@ -40,4 +40,9 @@ public class FileServiceImpl implements FileService {
     public List<File> select(Integer id, String title,String date) {
         return fileRepository.select(id, title, date);
     }
+
+    @Override
+    public List<File> getAllById(Integer id) {
+        return fileRepository.getAllById(id);
+    }
 }

@@ -951,6 +951,7 @@ sequence|table|16556|16558|1
     </sequence>
     <table id="33" parent="17" name="file">
       <ObjectId>16459</ObjectId>
+      <Outdated>1</Outdated>
       <Owner>root</Owner>
       <StateNumber>521</StateNumber>
     </table>
