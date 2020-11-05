@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>add new file</title>
+</head>
+<body>
+<form action="user/add-new-order/{id}" method="POST">
+    <label>Id</label>
+    <input type="text" name="new_file_id" required>
+    <label>Name</label>
+    <input type="text" name="name" required>
+    <label>Date</label>
+    <input type="text" name="date" required>
+    <input type="submit" value="Add new order">
+    <input type="hidden" name="user_id"  th:value="${user_id}"></input>
+
+</form>
+
+
+</body>
+</html>

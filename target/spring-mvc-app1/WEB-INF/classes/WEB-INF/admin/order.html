@@ -23,38 +23,40 @@
     </style>
 </head>
 <body>
-<form action="/" method="get">
+
+<form action="/admin/order" method="get">
     <input type="submit" value="Sign Out"/>
 </form>
 <table>
     <tr>
         <th>Files id</th>
+        <th>Ownew name</th>
         <th>Files name</th>
         <th>Date</th>
         <th>Delete</th>
         <th>Update</th>
     </tr>
-        <tr th:each="file : ${files}">
-            <td th:utext="${file.getUser_id()}"></td>
-            <td th:utext="${file.getName()}"></td>
-            <td th:utext="${file.getDate()}"></td>
-            <td><a th:href="@{/delete/{id}(id=${file.getId()})}">Delete this file</a></td>
+    <tr th:each="file : ${files}">
+        <td th:utext="${file.getUser_id()}"></td>
+        <td th:utext="${users.get(file.getFile_user()).getLogin()}"></td>
+        <td th:utext="${file.getName()}"></td>
+        <td th:utext="${file.getDate()}"></td>
 
-            <td><a th:href="@{/update/{id}(id=${file.getId()})}">Update this file</a></td>
+        <td><a th:href="@{admin/delete/{id}(id=${file.getId()})}">Delete this file</a></td>
 
-            <td></td>
-        </tr>
+        <td><a th:href="@{admin/update/{id}(id=${file.getId()})}">Update this file</a></td>
+
+        <td></td>
+    </tr>
 
 </table>
-<a th:href="@{/add-new-order/{id}(id=${id})}">Add new file</a>
 
-<form action="/select/{id}">
+<form action="/admin/select">
     <p>selecting files</p>
-    <input type="hidden" name="id"  th:value="${id}"></input>
     <label>Id</label>
-    <input type="text" name="user_id">
+    <input type="text" name="file_id">
     <label>Name</label>
-    <input type="text" name="title" >
+    <input type="text" name="name" >
     <label>Date</label>
     <input type="text" name="date" >
     <p><input type="submit" value="search"></p>

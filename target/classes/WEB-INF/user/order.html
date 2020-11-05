@@ -1,0 +1,68 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <title>Insert title here</title>
+    <style>
+        table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        td, th {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #dddddd;
+        }
+    </style>
+</head>
+<body>
+<input type="hidden" name="user_id"  th:value="${user_id}"></input>
+<!--id user-->
+
+<form action="/user/order" method="get">
+    <input type="submit" value="Sign Out"/>
+</form>
+<table>
+    <tr>
+        <th>Files id</th>
+        <th>Files name</th>
+        <th>Date</th>
+        <th>Delete</th>
+        <th>Update</th>
+    </tr>
+    <tr th:each="file : ${files}">
+        <td th:utext="${file.getUser_id()}"></td>
+        <td th:utext="${file.getName()}"></td>
+        <td th:utext="${file.getDate()}"></td>
+        <td><a th:href="@{user/delete/{id}(id=${file.getId()})}">Delete this file</a></td>
+
+        <td><a th:href="@{user/update/{id}(id=${file.getId()})}">Update this file</a></td>
+
+        <td></td>
+    </tr>
+
+</table>
+<a th:href="@{user/add-new-order/{id}(id=${user_id})}">Add new file</a>
+
+<form action="/user/select/">
+    <p>selecting files</p>
+    <input type="hidden" name="user_id"  th:value="${user_id}"></input>
+    <label>Id</label>
+    <input type="text" name="file_id">
+    <label>Name</label>
+    <input type="text" name="title" >
+    <label>Date</label>
+    <input type="text" name="date" >
+    <p><input type="submit" value="search"></p>
+</form>
+
+</body>
+
+</html>

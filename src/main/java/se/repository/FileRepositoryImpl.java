@@ -64,21 +64,23 @@ public class FileRepositoryImpl implements FileRepository {
     @Override
     public List<File> select(Integer id, Integer user_id,  String title,String date) {
         List<File> files = new ArrayList<File>();
-        StringBuilder sql = new StringBuilder("select * from file where file_user = ").append(id);
         if (user_id == 0 && title.trim().isEmpty() && date.trim().isEmpty()){
-            files.addAll(jdbcTemplate.query(sql.toString(), new FileMapping()));
+            files.addAll(jdbcTemplate.query("select * from file", new FileMapping()));
             return files;
         }
+        StringBuilder sql = new StringBuilder("select * from file where ");
+        if(id != 0)
+            sql.append( "file_user = ").append(id + " and ");
+
         if (user_id != 0)
-            sql.append(" and user_id = ").append(user_id.toString());
+            sql.append("user_id = ").append(user_id.toString() + " and ");
         if (!title.trim().isEmpty())
-            sql.append(" and name = '").append(title.trim()).append("'");
+            sql.append("name = '").append(title.trim()).append("' and ");
         if (!date.trim().isEmpty())
-            sql.append(" and date = '").append(date.trim()).append("'");
-        if (sql.lastIndexOf("d") == sql.length()-1)
+            sql.append("date = '").append(date.trim()).append("'");
+        if (sql.lastIndexOf("d") == sql.length()-2)
             sql.delete((sql.length()-4), sql.length());
 
-        System.out.println("1=" + id + " 2=" + user_id + " 3=" + title + " 4="+ date);
         files.addAll(jdbcTemplate.query(sql.toString(), new FileMapping()));
         return files;
     }
