@@ -21,7 +21,6 @@ public class FileRepositoryImpl implements FileRepository {
     }
 
 
-
     public void save(File file) {
         jdbcTemplate.update(
                 "INSERT INTO file (user_id, name, date, file_user) VALUES (?, ?, ?, ?)",
@@ -55,22 +54,31 @@ public class FileRepositoryImpl implements FileRepository {
         return jdbcTemplate.query(sql, new FileMapping()).get(0);
     }
 
-    public void update(Integer id,Integer user_id, String name,String date) {
+    public void update(Integer id, Integer user_id, String name, String date) {
 
-        jdbcTemplate.update("update file set name = ?, date = ?, user_id = ? where id = ?",  name, date, id, user_id);
 
-        }
+        System.out.println("id " + id + " new_file_id " + user_id + " name" + name + "date" + date);
+
+        jdbcTemplate.update("update file set name = ?, date = ?, user_id = ? where id = ?", name, date, user_id, id);
+
+    }
 
     @Override
-    public List<File> select(Integer id, Integer user_id,  String title,String date) {
+    public List<File> select(Integer id, Integer user_id, String title, String date) {
         List<File> files = new ArrayList<File>();
-        if (user_id == 0 && title.trim().isEmpty() && date.trim().isEmpty()){
+        if (user_id == 0 && title.trim().isEmpty() && date.trim().isEmpty()) {
+            if (id != 0) {
+                StringBuilder sql = new StringBuilder("select * from file where file_user = ");
+                sql.append(id.toString());
+                files.addAll(jdbcTemplate.query(sql.toString(), new FileMapping()));
+                return files;
+            }
             files.addAll(jdbcTemplate.query("select * from file", new FileMapping()));
             return files;
         }
         StringBuilder sql = new StringBuilder("select * from file where ");
-        if(id != 0)
-            sql.append( "file_user = ").append(id + " and ");
+        if (id != 0)
+            sql.append("file_user = ").append(id + " and ");
 
         if (user_id != 0)
             sql.append("user_id = ").append(user_id.toString() + " and ");
@@ -78,8 +86,8 @@ public class FileRepositoryImpl implements FileRepository {
             sql.append("name = '").append(title.trim()).append("' and ");
         if (!date.trim().isEmpty())
             sql.append("date = '").append(date.trim()).append("'");
-        if (sql.lastIndexOf("d") == sql.length()-2)
-            sql.delete((sql.length()-4), sql.length());
+        if (sql.lastIndexOf("d") == sql.length() - 2)
+            sql.delete((sql.length() - 4), sql.length());
 
         files.addAll(jdbcTemplate.query(sql.toString(), new FileMapping()));
         return files;

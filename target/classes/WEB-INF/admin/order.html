@@ -24,7 +24,7 @@
 </head>
 <body>
 
-<form action="/admin/order" method="get">
+<form action="/login" method="get">
     <input type="submit" value="Sign Out"/>
 </form>
 <table>
@@ -42,9 +42,9 @@
         <td th:utext="${file.getName()}"></td>
         <td th:utext="${file.getDate()}"></td>
 
-        <td><a th:href="@{admin/delete/{id}(id=${file.getId()})}">Delete this file</a></td>
+        <td><a th:href="@{/admin/delete/{id}(id=${file.getId()})}">Delete this file</a></td>
 
-        <td><a th:href="@{admin/update/{id}(id=${file.getId()})}">Update this file</a></td>
+        <td><a th:href="@{/admin/update/{id}(id=${file.getId()})}">Update this file</a></td>
 
         <td></td>
     </tr>

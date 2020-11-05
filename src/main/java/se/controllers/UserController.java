@@ -14,28 +14,29 @@ import se.service.FileServiceImpl;
 
 
 @Controller
-public class UserController{
+public class UserController {
     static FileService fileRepository = new FileServiceImpl();
     static UserRepository users = new UserRepositoryImpl();
 
-    @GetMapping("user/order")
+    @GetMapping("/user/order")
     public String getOrderPage(Model model, @RequestParam(value = "user_id") int id) {
         model.addAttribute("user_id", id);
         model.addAttribute("files", fileRepository.getAllById(id));
         return "user/order";
     }
 
-    @GetMapping("user/add-new-order/{id}")
+    @GetMapping("/user/add-new-order/{id}")
     public String addNewOrderPage(@PathVariable("id") Integer user_id, Model model) {//@PathVariable("id") Integer id,
         model.addAttribute("user_id", user_id);
         return "user/addNewOrder";
     }
 
-    @PostMapping("user/add-new-order/{id}")
+    @PostMapping("/user/add-new-order/{id}")
     public String addNewOrder(@RequestParam(value = "new_file_id") int new_file_id,
                               @RequestParam(value = "name") String name,
                               @RequestParam(value = "date") String date,
                               @RequestParam(value = "user_id") int user_id, Model model) {
+        System.out.println(user_id + " user_id");
         File file = new File();
         file.setUser_id(new_file_id);
         file.setName(name);
@@ -51,7 +52,7 @@ public class UserController{
     }
 
 
-    @GetMapping("user/update/{id}")
+    @GetMapping("/user/update/{id}")
     public String updateItemPage(@PathVariable("id") Integer id, //@RequestParam("user_id") int user_id,
                                  Model model) {
         // id - file
@@ -60,7 +61,7 @@ public class UserController{
     }
 
 
-    @PostMapping("user/update/{id}")
+    @PostMapping("/user/update/{id}")
     public String updateItem(@RequestParam("file_id") Integer id,
                              @RequestParam("new_file_id") Integer new_file_id,
                              @RequestParam(value = "name") String name,
@@ -75,7 +76,7 @@ public class UserController{
     }
 
 
-    @GetMapping("user/delete/{id}")
+    @GetMapping("/user/delete/{id}")
     public String deleteItem(@PathVariable Integer id, Model model) {
         //id - file
         int oldId = fileRepository.getById(id).getFile_user();
@@ -89,7 +90,7 @@ public class UserController{
     }
 
 
-    @GetMapping("user/select")
+    @GetMapping("/user/select")
     public String getOrderFilter(@RequestParam(value = "file_id", required = false, defaultValue = "0") Integer file_id,
                                  @RequestParam(value = "user_id", required = false) Integer user_id,
                                  @RequestParam(value = "name", required = false) String name,

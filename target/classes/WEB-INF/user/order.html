@@ -41,23 +41,23 @@
         <td th:utext="${file.getUser_id()}"></td>
         <td th:utext="${file.getName()}"></td>
         <td th:utext="${file.getDate()}"></td>
-        <td><a th:href="@{user/delete/{id}(id=${file.getId()})}">Delete this file</a></td>
+        <td><a th:href="@{/user/delete/{id}(id=${file.getId()})}">Delete this file</a></td>
 
-        <td><a th:href="@{user/update/{id}(id=${file.getId()})}">Update this file</a></td>
+        <td><a th:href="@{/user/update/{id}(id=${file.getId()})}">Update this file</a></td>
 
         <td></td>
     </tr>
 
 </table>
-<a th:href="@{user/add-new-order/{id}(id=${user_id})}">Add new file</a>
+<a th:href="@{/user/add-new-order/{id}(id=${user_id})}">Add new file</a>
 
-<form action="/user/select/">
+<form action="/user/select">
     <p>selecting files</p>
     <input type="hidden" name="user_id"  th:value="${user_id}"></input>
     <label>Id</label>
     <input type="text" name="file_id">
     <label>Name</label>
-    <input type="text" name="title" >
+    <input type="text" name="name" >
     <label>Date</label>
     <input type="text" name="date" >
     <p><input type="submit" value="search"></p>
