@@ -14,10 +14,12 @@ public interface FileRepository {
 
     List<File> getAllById(Integer id);
 
-
     File getById(Integer id);
 
     void update(Integer id, Integer user_id,String title, String date);
 
     List<File> select(Integer id, Integer user_id, String title, String date);
+
+    List<File> sort(Integer file_id, Integer user_id, String field);
+
 }

@@ -92,4 +92,15 @@ public class FileRepositoryImpl implements FileRepository {
         files.addAll(jdbcTemplate.query(sql.toString(), new FileMapping()));
         return files;
     }
+
+    @Override
+    public List<File> sort(Integer file_id, Integer user_id, String field) {
+        List<File> files = new ArrayList<File>();
+        StringBuilder sql = new StringBuilder("select * from ");
+        if(user_id != 0)
+            sql.append("where file_user = ").append(user_id + " ");
+        sql.append("order by "+ field);
+        files.addAll(jdbcTemplate.query(sql.toString(), new FileMapping()));
+        return files;
+    }
 }
