@@ -116,8 +116,10 @@ public class FileUserController {
     }
 
     @GetMapping("/update/{id}")
-    public String updateItemPage(@PathVariable Integer id, Model model) {
-        System.out.println(id);
+    public String updateItemPage(@PathVariable("id") Integer id , @RequestParam("user_id") int user_id
+            ,Model model) {
+        System.out.println("======" +user_id);
+        // id - file
         model.addAttribute("id", id);
         return "update";
     }
@@ -126,20 +128,34 @@ public class FileUserController {
     public String updateItem(@RequestParam("id") int id, @RequestParam("user_id") int user_id,
                              @RequestParam(value = "title") String title,
                              @RequestParam(value = "price") String date, Model model) {
-        // id
-        // admin
+        // id - file
+        System.out.println("id " + id + " user_id " + user_id);
         fileRepository.update(user_id, id, title, date);
-        model.addAttribute("id",id);
-        model.addAttribute("files", fileRepository.getAllById(fileRepository.getById(id).getFile_user()));
+        if (users.getByFileUser(fileRepository.getById(id).getFile_user()).getRole().equals("admin")) {
+            System.out.println(id + " update");
+            model.addAttribute("id", id);
+            model.addAttribute("files", fileRepository.getAll());
+        } else {
+            model.addAttribute("id", id);
+            model.addAttribute("files", fileRepository.getAllById(fileRepository.getById(id).getFile_user()));
+        }
         return "order"; // команда, которая сделает перенаправление на другой урл
     }
 
     @GetMapping("/delete/{id}")
     public String deleteItem(@PathVariable Integer id, Model model) {
-        //File order = fileRepository.getById(id);
+
         int oldId = fileRepository.getById(id).getFile_user();
+
         fileRepository.delete(id);
-        model.addAttribute("files", fileRepository.getAllById(oldId));
+        if (users.getByFileUser(oldId).getRole().equals("admin")) {
+            System.out.println(id + " delete");
+            model.addAttribute("files", fileRepository.getAll());
+        } else {
+            model.addAttribute("files", fileRepository.getAllById(oldId));
+        }
+
+
         return "order";
     }
 
@@ -151,11 +167,14 @@ public class FileUserController {
 
         // id - number user
 
-        System.out.println("1=" + id + " 2=" + user_id + " 3=" + title + " 4="+ date);
 
         if (users.getByFileUser(Integer.valueOf(id)).getRole().equals("admin")) {
+            System.out.println(id + " select");
             // select empty???
-            model.addAttribute("files", fileRepository.select(Integer.valueOf(id), Integer.valueOf(user_id), title, date));
+            if(user_id.equals(0) && title.trim().isEmpty() && date.trim().isEmpty())
+                model.addAttribute("files", fileRepository.getAll());
+            else
+                model.addAttribute("files", fileRepository.select(Integer.valueOf(id), Integer.valueOf(user_id), title, date));
             model.addAttribute("id", Integer.valueOf(id));
         } else {
             model.addAttribute("files", fileRepository.select(Integer.valueOf(id), Integer.valueOf(user_id), title, date));
