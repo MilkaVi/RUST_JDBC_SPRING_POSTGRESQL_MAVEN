@@ -20,6 +20,6 @@ public interface FileRepository {
 
     List<File> select(Integer id, Integer user_id, String title, String date);
 
-    List<File> sort(Integer file_id, Integer user_id, String field);
+    List<File> sort( Integer user_id, String field);
 
 }

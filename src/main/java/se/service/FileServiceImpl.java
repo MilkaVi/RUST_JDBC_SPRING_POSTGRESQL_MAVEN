@@ -45,4 +45,9 @@ public class FileServiceImpl implements FileService {
     public List<File> getAllById(Integer id) {
         return fileRepository.getAllById(id);
     }
+
+    @Override
+    public List<File> sort(Integer user_id, String field) {
+        return fileRepository.sort(user_id,field);
+    }
 }

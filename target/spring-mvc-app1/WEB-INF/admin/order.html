@@ -29,14 +29,14 @@
 </form>
 <table>
     <tr>
-        <form action="/sort" method="get">
-            <th> <input type="submit"  name = "Ownew name" value="Ownew name"/></th>
+        <form action="/admin/sort" method="get">
+            <th>Ownew name</th>
+            <th> <input type="submit"  name = "field" value="Files id"/></th>
+            <th> <input type="submit"  name = "field" value="Files name"/></th>
+            <th> <input type="submit"  name = "field" value="Date"/></th>
+            <th>Delete</th>
+            <th>Update</th>
         </form>
-        <th>Files id</th>
-        <th>Files name</th>
-        <th>Date</th>
-        <th>Delete</th>
-        <th>Update</th>
     </tr>
     <tr th:each="file : ${files}">
         <td th:utext="${users.get(file.getFile_user()).getLogin()}"></td>

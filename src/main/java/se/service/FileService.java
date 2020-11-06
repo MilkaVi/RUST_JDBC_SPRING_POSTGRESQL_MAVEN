@@ -19,4 +19,5 @@ public interface FileService {
     List<File> select(Integer id, Integer user_id, String title, String date);
 
     List<File> getAllById(Integer id);
+    List<File> sort( Integer user_id, String field);
 }

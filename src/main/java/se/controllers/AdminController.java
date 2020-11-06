@@ -71,5 +71,14 @@ public class AdminController {
         return "admin/order";
     }
 
+    @GetMapping("/admin/sort")
+    public String sort(@RequestParam(value = "field") String field, Model model) {
+
+        model.addAttribute("files",fileRepository.sort(0,field));
+        model.addAttribute("users", users.getAll());
+
+        return "admin/order";
+    }
+
 
 }

@@ -94,12 +94,24 @@ public class FileRepositoryImpl implements FileRepository {
     }
 
     @Override
-    public List<File> sort(Integer file_id, Integer user_id, String field) {
+    public List<File> sort( Integer user_id, String field) {
         List<File> files = new ArrayList<File>();
-        StringBuilder sql = new StringBuilder("select * from ");
+        StringBuilder sql = new StringBuilder("select * from file ");
         if(user_id != 0)
             sql.append("where file_user = ").append(user_id + " ");
-        sql.append("order by "+ field);
+
+        switch (field){
+            case "Files id":
+                sql.append("order by user_id");
+                break;
+            case "Files name":
+                sql.append("order by name");
+                break;
+            case "Date":
+                sql.append("order by date");
+                break;
+            }
+
         files.addAll(jdbcTemplate.query(sql.toString(), new FileMapping()));
         return files;
     }

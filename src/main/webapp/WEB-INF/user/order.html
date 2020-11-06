@@ -31,11 +31,13 @@
 </form>
 <table>
     <tr>
-        <th>Files id</th>
-        <th>Files name</th>
-        <th>Date</th>
-        <th>Delete</th>
-        <th>Update</th>
+        <form action="/user/sort/{user_id}" method="get">
+            <th> <a th:href="@{/user/sort/{user_id}(user_id=${user_id})}" name = "field" value="Files id"/>Files id</th>
+            <th> <a th:href="@{/user/sort/{user_id}(user_id=${user_id})}"  name = "field" value="Files name"/>Files name</th>
+            <th> <a th:href="@{/user/sort/{user_id}(user_id=${user_id})} "  name = "field" value="Date"/>Date</th>
+            <th>Delete</th>
+            <th>Update</th>
+        </form>
     </tr>
     <tr th:each="file : ${files}">
         <td th:utext="${file.getUser_id()}"></td>

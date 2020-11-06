@@ -46,7 +46,7 @@ public class UserController {
         fileRepository.save(file);
 
         model.addAttribute("files", fileRepository.getAllById(user_id));
-        model.addAttribute("id", user_id);
+        model.addAttribute("user_id", user_id);
 
         return "user/order"; // команда, которая сделает перенаправление на другой урл
     }
@@ -102,6 +102,17 @@ public class UserController {
         model.addAttribute("user_id", user_id);
         return "user/order";
     }
+
+    @GetMapping("/user/sort/{user_id}")
+    public String sort(@RequestParam(value = "field") String field,
+                       @PathVariable Integer user_id,
+                       Model model) {
+        System.out.println("----"+user_id);
+        model.addAttribute("files",fileRepository.sort(user_id,field));
+        model.addAttribute("user_id", user_id);
+        return "user/order";
+    }
+
 
 
 }
