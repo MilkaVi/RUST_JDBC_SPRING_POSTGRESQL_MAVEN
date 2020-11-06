@@ -103,16 +103,6 @@ public class UserController {
         return "user/order";
     }
 
-    @GetMapping("/user/sort/{user_id}")
-    public String sort(@RequestParam(value = "field") String field,
-                       @PathVariable Integer user_id,
-                       Model model) {
-        System.out.println("----"+user_id);
-        model.addAttribute("files",fileRepository.sort(user_id,field));
-        model.addAttribute("user_id", user_id);
-        return "user/order";
-    }
-
 
 
 }
