@@ -95,7 +95,7 @@ public class UserController {
                                  @RequestParam(value = "date", required = false) String date, Model model) {
 
         // id - file
-
+        System.out.println(file_id + "=filed_id  " +user_id + "user_id"  );
         model.addAttribute("files", fileRepository.select(user_id, file_id, name, date));
         model.addAttribute("user_id", user_id);
         return "user/order";

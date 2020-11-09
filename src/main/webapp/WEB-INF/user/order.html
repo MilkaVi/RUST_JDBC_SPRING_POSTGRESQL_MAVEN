@@ -5,6 +5,12 @@
     <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
     <title>Insert title here</title>
     <style>
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
         table {
             font-family: arial, sans-serif;
             border-collapse: collapse;
@@ -12,7 +18,7 @@
         }
 
         td, th {
-            border: 1px solid #dddddd;
+            border: 2px solid #dddddd;
             text-align: left;
             padding: 8px;
         }
@@ -20,48 +26,66 @@
         tr:nth-child(even) {
             background-color: #dddddd;
         }
+
+
     </style>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.4/css/bootstrap.min.css"
+          integrity="2hfp1SzUoho7/TsGGGDaFdsuuDL0LX2hnUp6VkX3CUQ2K4K+xjboZdsXyp4oUHZj" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.4/js/bootstrap.min.js"
+            integrity="VjEeINv9OSwtWFLAtmc4JCtEJXXBub00gtSnszmspDLCtC0I4z4nqz7rEFbIZLLU"
+            crossorigin="anonymous"></script>
 </head>
 <body>
-<input type="hidden" name="user_id"  th:value="${user_id}"></input>
+<input type="hidden" name="user_id" th:value="${user_id}"></input>
 <!--id user-->
 
-<form action="/" method="get">
-    <input type="submit" value="Sign Out"/>
-</form>
-<table>
-    <tr>
-            <th> Files id</th>
-            <th> Files name</th>
-            <th> Date</th>
-            <th>Delete</th>
-            <th>Update</th>
 
+<table class="table" style="">
+
+    <thead class="thead-inverse">
+    <tr>
+        <th> Files id</th>
+        <th> Files name</th>
+        <th> Date</th>
+        <th>Delete</th>
+        <th>Update</th>
     </tr>
+    </thead>
+
     <tr th:each="file : ${files}">
         <td th:utext="${file.getUser_id()}"></td>
         <td th:utext="${file.getName()}"></td>
         <td th:utext="${file.getDate()}"></td>
-        <td><a th:href="@{/user/delete/{id}(id=${file.getId()})}">Delete this file</a></td>
+        <td><a style=" border-radius: 10px;" class="btn btn-lg btn-primary btn-block"
+               th:href="@{/user/delete/{id}(id=${file.getId()})}">Delete this file</a></td>
 
-        <td><a th:href="@{/user/update/{id}(id=${file.getId()})}">Update this file</a></td>
-
-        <td></td>
+        <td><a style=" border-radius: 10px;" class="btn btn-lg btn-primary btn-block"
+               th:href="@{/user/update/{id}(id=${file.getId()})}">Update this file</a></td>
     </tr>
 
 </table>
-<a th:href="@{/user/add-new-order/{id}(id=${user_id})}">Add new file</a>
-
-<form action="/user/select">
-    <p>selecting files</p>
-    <input type="hidden" name="user_id"  th:value="${user_id}"></input>
+<div style="display: flex; justify-content: left; margin-top: 10px; ">
+    <a class="btn btn-lg btn-primary btn-block"
+       th:href="@{/user/add-new-order/{id}(id=${user_id})}">Add new file</a>
+</div>
+<form action="/user/select" style="margin-top: 10px;">
+    <h1 class="h3 mb-3 font-weight-normal" style="margin-top: 10px;">file selection</h1>
+    <input type="hidden" name="user_id" th:value="${user_id}"/>
     <label>Id</label>
     <input type="text" name="file_id">
     <label>Name</label>
-    <input type="text" name="name" >
+    <input type="text" name="name">
     <label>Date</label>
-    <input type="text" name="date" >
-    <p><input type="submit" value="search"></p>
+    <input type="text" name="date">
+    <p><input class="btn btn-lg btn-primary btn-block" style=" border-radius: 10px; margin-top: 10px; "
+              type="submit" value="search"></p>
+</form>
+
+<form action="/" method="get">
+    <input style=" float: right;
+    margin-left: -50%; margin-top: 10px;
+    border-radius: 10px; background-color: #6f42c1;" type="submit"
+           value="Sign Out"/>
 </form>
 
 </body>

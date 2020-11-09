@@ -27,33 +27,38 @@
 </head>
 <body class="text-center">
 
-<form action="/" method="get">
-    <input style="display: flex; justify-content: left;" type="submit" value="Sign Out"/>
+<form action="/" method="get">"
+    <input style=" float: right; border-radius: 10px;" class="btn btn-lg btn-primary btn-block" type="submit"
+           value="Sign Out"/>
 </form>
 <table>
+    <thead class="thead-inverse">
     <tr>
         <form action="/admin/sort" method="get">
             <th>Ownew name</th>
-            <th> <input type="submit"  name = "field" value="Files id"/></th>
-            <th> <input type="submit"  name = "field" value="Files name"/></th>
-            <th> <input type="submit"  name = "field" value="Date"/></th>
+            <th><input style=" border-radius: 10px;" class="btn btn-lg btn-primary btn-block"
+                       type="submit" name="field" value="Files id"/></th>
+            <th><input style=" border-radius: 10px;" class="btn btn-lg btn-primary btn-block"
+                       type="submit" name="field" value="Files name"/></th>
+            <th><input style=" border-radius: 10px;" class="btn btn-lg btn-primary btn-block"
+                       type="submit" name="field" value="Date"/></th>
             <th>Delete</th>
             <th>Update</th>
         </form>
     </tr>
+    </thead>
     <tr th:each="file : ${files}">
         <td th:utext="${users.get(file.getFile_user()).getLogin()}"></td>
         <td th:utext="${file.getUser_id()}"></td>
         <td th:utext="${file.getName()}"></td>
         <td th:utext="${file.getDate()}"></td>
 
-        <td><a class="btn btn-lg btn-primary btn-block"
+        <td><a class="btn btn-lg btn-primary btn-block" style=" border-radius: 10px;"
                th:href="@{/admin/delete/{id}(id=${file.getId()})}">Delete this file</a></td>
 
-        <td><a class="btn btn-lg btn-primary btn-block"
+        <td><a class="btn btn-lg btn-primary btn-block" style=" border-radius: 10px;"
                th:href="@{/admin/update/{id}(id=${file.getId()})}">Update this file</a></td>
 
-        <td></td>
     </tr>
 
 </table>
@@ -63,10 +68,11 @@
     <label>Id</label>
     <input type="text" name="file_id">
     <label>Name</label>
-    <input type="text" name="name" >
+    <input type="text" name="name">
     <label>Date</label>
-    <input type="text" name="date" >
-    <p><input class="btn btn-lg btn-primary btn-block" type="submit" value="search"></p>
+    <input type="text" name="date">
+    <p><input style=" border-radius: 10px; background-color: #6f42c1;" class="btn btn-lg btn-primary btn-block"
+              type="submit" value="search"></p>
 </form>
 
 </body>
