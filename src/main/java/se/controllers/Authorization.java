@@ -31,8 +31,6 @@ public class Authorization {
     @PostMapping("/login")
     public String signIn(@Valid User user, Errors errors, Model model) {
         if(errors.hasErrors()){
-
-            System.out.println("error++++++++++++++++++++++++++++++");
             return "login";
         }
 
@@ -58,20 +56,25 @@ public class Authorization {
 
 
     @GetMapping("/registration")
-    public String registration() {
+    public String registration(Model model) {
+
+        model.addAttribute("user", new User());
         return "registration";
     }
 
 
     @PostMapping("/registration")
-    public String addUser(@RequestParam(value = "login") String login,
-                          @RequestParam(value = "password") String password,
+    public String addUser(@Valid User user, Errors errors,
                           Model model) {
-        User userFromDB = users.getByLogPass(login.trim(), password.trim());
+        if(errors.hasErrors()){
+            return "registration";
+        }
+
+        User userFromDB = users.getByLogPass(user.getLogin(), user.getPassword());
         if (userFromDB == null) {
             userFromDB = new User();
-            userFromDB.setLogin(login.trim());
-            userFromDB.setPassword(password.trim());
+            userFromDB.setLogin(user.getLogin());
+            userFromDB.setPassword(user.getPassword());
             userFromDB.setRole("user");
             users.save(userFromDB);
         }
