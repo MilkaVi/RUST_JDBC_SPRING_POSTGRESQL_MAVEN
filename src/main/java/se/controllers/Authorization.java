@@ -66,7 +66,7 @@ public class Authorization {
         }
 
         model.addAttribute("files", fileRepository.getAllById(users.getId(userFromDB)));
-        model.addAttribute("id", users.getId(userFromDB));
+        model.addAttribute("user_id", users.getId(userFromDB));
         return "user/order";
     }
 

@@ -20,6 +20,7 @@ public class UserController {
 
     @GetMapping("/user/order")
     public String getOrderPage(Model model, @RequestParam(value = "user_id") int id) {
+        System.out.println(id+ " order");
         model.addAttribute("user_id", id);
         model.addAttribute("files", fileRepository.getAllById(id));
         return "user/order";
@@ -27,6 +28,7 @@ public class UserController {
 
     @GetMapping("/user/add-new-order/{id}")
     public String addNewOrderPage(@PathVariable("id") Integer user_id, Model model) {//@PathVariable("id") Integer id,
+        System.out.println(user_id+ " =====");
         model.addAttribute("user_id", user_id);
         return "user/addNewOrder";
     }
