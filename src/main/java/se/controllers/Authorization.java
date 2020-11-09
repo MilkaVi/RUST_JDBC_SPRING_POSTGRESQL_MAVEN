@@ -3,7 +3,9 @@ package se.controllers;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import se.domain.User;
@@ -12,32 +14,41 @@ import se.repository.UserRepositoryImpl;
 import se.service.FileService;
 import se.service.FileServiceImpl;
 
+import javax.validation.Valid;
+
 @Controller
 public class Authorization {
     static FileService fileRepository = new FileServiceImpl();
     static UserRepository users = new UserRepositoryImpl();
 
     @GetMapping()
-    public String index() {
+    public String index(Model model) {
+
+        model.addAttribute("user", new User());
         return "login";
     }
 
     @PostMapping("/login")
-    public String signIn(Model model, @RequestParam(value = "login") String login,
-                         @RequestParam(value = "password") String password) {
+    public String signIn(@Valid User user, Errors errors, Model model) {
+        if(errors.hasErrors()){
 
-        if (users.getByLogPass(login.trim(), password.trim()) == null) {
+            System.out.println("error++++++++++++++++++++++++++++++");
+            return "login";
+        }
+
+        if (users.getByLogPass(user.getLogin().trim(), user.getPassword().trim()) == null) {
             return "registration";
         } else {
-            int id = users.getId(users.getByLogPass(login, password));// id - user
+            int id = users.getId(users.getByLogPass(user.getLogin(), user.getPassword()));// id - user
 
-            if (users.getByLogPass(login, password).getRole().equals("admin")) {
+            if (users.getByLogPass(user.getLogin(), user.getPassword()).getRole().equals("admin")) {
 
                 model.addAttribute("files", fileRepository.getAll());
                 model.addAttribute("users", users.getAll());
                 model.addAttribute("user_id", id);
                 return "admin/order";
             } else {
+                model.addAttribute("user", new User());
                 model.addAttribute("user_id", id);
                 model.addAttribute("files", fileRepository.getAllById(id));
                 return "user/order";

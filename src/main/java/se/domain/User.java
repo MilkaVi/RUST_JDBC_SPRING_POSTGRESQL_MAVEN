@@ -1,12 +1,22 @@
 package se.domain;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
+
 public class User {
 
 
     // таблица ролей связана с таблицей пользователей
     // роль - логин
     private Integer id = 0;
+
+
+    @NotBlank
+    @Size(min=3,message = "min 3 characters")
     private String login;
+
+    @NotBlank
+    @Size(min=3,message = "min 3 characters")
     private String password;
     private String role;
 

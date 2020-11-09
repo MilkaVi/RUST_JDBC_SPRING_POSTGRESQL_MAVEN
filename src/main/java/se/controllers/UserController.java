@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import se.domain.File;
+import se.domain.User;
 import se.repository.UserRepository;
 import se.repository.UserRepositoryImpl;
 import se.service.FileService;
@@ -20,7 +21,6 @@ public class UserController {
 
     @GetMapping("/user/order")
     public String getOrderPage(Model model, @RequestParam(value = "user_id") int id) {
-        System.out.println(id+ " order");
         model.addAttribute("user_id", id);
         model.addAttribute("files", fileRepository.getAllById(id));
         return "user/order";
@@ -28,8 +28,7 @@ public class UserController {
 
     @GetMapping("/user/add-new-order/{id}")
     public String addNewOrderPage(@PathVariable("id") Integer user_id, Model model) {//@PathVariable("id") Integer id,
-        System.out.println(user_id+ " =====");
-        model.addAttribute("user_id", user_id);
+                model.addAttribute("user_id", user_id);
         return "user/addNewOrder";
     }
 
@@ -38,7 +37,6 @@ public class UserController {
                               @RequestParam(value = "name") String name,
                               @RequestParam(value = "date") String date,
                               @RequestParam(value = "user_id") int user_id, Model model) {
-        System.out.println(user_id + " user_id");
         File file = new File();
         file.setUser_id(new_file_id);
         file.setName(name);
@@ -69,8 +67,6 @@ public class UserController {
                              @RequestParam(value = "name") String name,
                              @RequestParam(value = "date") String date, Model model) {
         // id - file
-        System.out.println("id " + id + " new_file_id " + new_file_id);
-
         fileRepository.update(id, new_file_id, name, date);
         model.addAttribute("files", fileRepository.getAllById(fileRepository.getById(id).getFile_user()));
         model.addAttribute("user_id", fileRepository.getById(id).getFile_user());
