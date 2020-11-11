@@ -1,13 +1,9 @@
 package se.domain;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 
 public class User {
 
-
-    // таблица ролей связана с таблицей пользователей
-    // роль - логин
     private Integer id = 0;
 
 

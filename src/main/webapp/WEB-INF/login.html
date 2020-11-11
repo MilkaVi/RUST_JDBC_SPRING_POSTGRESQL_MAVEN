@@ -25,7 +25,7 @@
         <span class="validationError"
               th:if="${#fields.hasErrors('login')}"
               th:errors="*{login}">
-    </span>
+        </span>
         <label for="inputPassword" class="sr-only">Password</label>
         <input th:field="*{password}" type="password" id="inputPassword" class="form-control"
                placeholder="Password"  required>

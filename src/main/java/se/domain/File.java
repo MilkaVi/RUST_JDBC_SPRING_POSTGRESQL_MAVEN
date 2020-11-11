@@ -1,8 +1,26 @@
+
 package se.domain;
+
+import org.hibernate.validator.constraints.Range;
+
+import javax.validation.constraints.*;
 
 public class File {
     private Integer id;
+
+
+    @Digits(integer=3, fraction=0, message = "Не более 3-х знаков")
+    @NotNull
     private Integer user_id;
+
+    @NotBlank
+    @Size(min=1,message = "min 1 characters")
+    private String name;
+
+    @NotBlank
+    @Size(min=1,message = "min 1 characters")
+    private String date;
+    private Integer file_user;
 
     public Integer getUser_id() {
         return user_id;
@@ -11,10 +29,6 @@ public class File {
     public void setUser_id(Integer user_id) {
         this.user_id = user_id;
     }
-
-    private String name;
-    private String date;
-    private Integer file_user;
 
     public Integer getFile_user() {
         return file_user;

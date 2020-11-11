@@ -1,19 +1,44 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>add new file</title>
+    <style>
+        .validationError {
+            color: red;
+        }
+    </style>
+    <!-- Bootstrap core CSS -->
+    <link href="/docs/4.5/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
 </head>
 <body>
-<form action="/user/add-new-order/{id}" method="POST">
+<form action="/user/add-new-order/{users_id}"  th:object="${file}" method="POST">
     <label>Id</label>
-    <input type="text" name="new_file_id" required>
+    <input type="text" th:field="*{user_id}" required>
+
+    <span class="validationError"
+          th:if="${#fields.hasErrors('user_id')}"
+          th:errors="*{user_id}">
+    </span>
+
     <label>Name</label>
-    <input type="text" name="name" required>
+    <input type="text" th:field="*{name}" required>
+
+    <span class="validationError"
+          th:if="${#fields.hasErrors('name')}"
+          th:errors="*{name}">
+    </span>
     <label>Date</label>
-    <input type="text" name="date" required>
+    <input type="text" th:field="*{date}" required>
+
+    <span class="validationError"
+          th:if="${#fields.hasErrors('date')}"
+          th:errors="*{date}">
+    </span>
+
     <input type="submit" value="Add new order">
-    <input type="hidden" name="user_id"  th:value="${id}"></input>
+    <input type="hidden" name="users_id"  th:value="${users_id}"></input>
 
 </form>
 

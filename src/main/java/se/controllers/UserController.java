@@ -2,6 +2,7 @@ package se.controllers;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,6 +13,8 @@ import se.repository.UserRepository;
 import se.repository.UserRepositoryImpl;
 import se.service.FileService;
 import se.service.FileServiceImpl;
+
+import javax.validation.Valid;
 
 
 @Controller
@@ -26,21 +29,20 @@ public class UserController {
         return "user/order";
     }
 
-    @GetMapping("/user/add-new-order/{id}")
-    public String addNewOrderPage(@PathVariable("id") Integer user_id, Model model) {//@PathVariable("id") Integer id,
-                model.addAttribute("user_id", user_id);
+    @GetMapping("/user/add-new-order/{users_id}")
+    public String addNewOrderPage(@PathVariable("users_id") Integer user_id, Model model) {//@PathVariable("id") Integer id,
+                model.addAttribute("file", new File());
+
         return "user/addNewOrder";
     }
 
-    @PostMapping("/user/add-new-order/{id}")
-    public String addNewOrder(@RequestParam(value = "new_file_id") int new_file_id,
-                              @RequestParam(value = "name") String name,
-                              @RequestParam(value = "date") String date,
-                              @RequestParam(value = "user_id") int user_id, Model model) {
-        File file = new File();
-        file.setUser_id(new_file_id);
-        file.setName(name);
-        file.setDate(date);
+    @PostMapping("/user/add-new-order/{users_id}")
+    public String addNewOrder(@Valid File file, Errors errors,
+                              @RequestParam(value = "users_id") int user_id, Model model) {
+        if(errors.hasErrors()){
+            model.addAttribute("users_id", user_id);
+            return "user/addNewOrder";
+        }
         file.setFile_user(user_id);
 
         fileRepository.save(file);
