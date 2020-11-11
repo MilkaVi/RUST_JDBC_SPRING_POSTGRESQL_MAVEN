@@ -54,22 +54,28 @@ public class UserController {
     }
 
 
-    @GetMapping("/user/update/{id}")
-    public String updateItemPage(@PathVariable("id") Integer id, //@RequestParam("user_id") int user_id,
+    @GetMapping("/user/update/{files_id}")
+    public String updateItemPage(@PathVariable("files_id") Integer id, //@RequestParam("user_id") int user_id,
                                  Model model) {
         // id - file
+        model.addAttribute("file", new File());
         model.addAttribute("file_id", id);
         return "user/update";
     }
 
 
-    @PostMapping("/user/update/{id}")
+    @PostMapping("/user/update/{files_id}")
     public String updateItem(@RequestParam("file_id") Integer id,
-                             @RequestParam("new_file_id") Integer new_file_id,
-                             @RequestParam(value = "name") String name,
-                             @RequestParam(value = "date") String date, Model model) {
+                             @Valid File file,
+                             Errors errors,
+                             Model model) {
+
+        if(errors.hasErrors()){
+            model.addAttribute("files_id", id);
+            return "user/update";
+        }
         // id - file
-        fileRepository.update(id, new_file_id, name, date);
+        fileRepository.update(id, file.getUser_id(), file.getName(), file.getDate());
         model.addAttribute("files", fileRepository.getAllById(fileRepository.getById(id).getFile_user()));
         model.addAttribute("user_id", fileRepository.getById(id).getFile_user());
         return "user/order";

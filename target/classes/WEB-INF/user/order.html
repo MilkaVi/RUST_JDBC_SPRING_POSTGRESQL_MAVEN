@@ -4,31 +4,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
     <title>Insert title here</title>
-    <style>
-        html,
-        body {
-            margin: 0;
-            padding: 0;
-        }
 
-        table {
-            font-family: arial, sans-serif;
-            border-collapse: collapse;
-            width: 100%;
-        }
-
-        td, th {
-            border: 2px solid #dddddd;
-            text-align: left;
-            padding: 8px;
-        }
-
-        tr:nth-child(even) {
-            background-color: #dddddd;
-        }
-
-
-    </style>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.4/css/bootstrap.min.css"
           integrity="2hfp1SzUoho7/TsGGGDaFdsuuDL0LX2hnUp6VkX3CUQ2K4K+xjboZdsXyp4oUHZj" crossorigin="anonymous">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.4/js/bootstrap.min.js"
@@ -60,7 +36,7 @@
                th:href="@{/user/delete/{id}(id=${file.getId()})}">Delete this file</a></td>
 
         <td><a style=" border-radius: 10px;" class="btn btn-lg btn-primary btn-block"
-               th:href="@{/user/update/{id}(id=${file.getId()})}">Update this file</a></td>
+               th:href="@{/user/update/{files_id}(files_id=${file.getId()})}">Update this file</a></td>
     </tr>
 
 </table>
@@ -68,19 +44,35 @@
     <a class="btn btn-lg btn-primary btn-block"
        th:href="@{/user/add-new-order/{users_id}(users_id=${user_id})}">Add new file</a>
 </div>
-<form action="/user/select" style="margin-top: 10px;">
-    <h1 class="h3 mb-3 font-weight-normal" style="margitn-top: 10px;">file selection</h1>
-    <input type="hidden" name="user_id" th:value="${user_id}"/>
-    <label>Id</label>
-    <input type="text" name="file_id">
-    <label>Name</label>
-    <input type="text" name="name">
-    <label>Date</label>
-    <input type="text" name="date">
-    <p><input class="btn btn-lg btn-primary btn-block" style=" border-radius: 10px; margin-top: 10px; "
-              type="submit" value="search"></p>
-</form>
 
+<h1 class="h3 mb-3 font-weight-normal" align="center" style="margitn-top: 15px; align-items: center">file selection</h1>
+<div class="container" align="center">
+    <form action="/user/select" style="margin-top: 10px;">
+        <input type="hidden" name="user_id" th:value="${user_id}"/>
+
+        <div align="center" class="row">
+
+            <div class="col-md-3 mb-3">
+                <label>Id</label>
+                <input type="text" class="form-control" name="file_id">
+            </div>
+
+            <div class="col-md-3 mb-3">
+                <label>Name</label>
+                <input type="text" class="form-control" name="name">
+            </div>
+
+            <div class="col-md-3 mb-3">
+                <label>Date</label>
+                <input type="text" class="form-control" name="date">
+            </div>
+
+        </div>
+        <p><input class="btn btn-lg btn-primary btn-block" style=" border-radius: 10px; margin-top: 10px; "
+                  type="submit" value="search"></p>
+
+    </form>
+</div>
 <form action="/" method="get">
     <input style=" float: right;
     margin-left: -50%; margin-top: 10px;

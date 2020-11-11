@@ -2,6 +2,7 @@ package se.controllers;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -11,6 +12,8 @@ import se.repository.UserRepository;
 import se.repository.UserRepositoryImpl;
 import se.service.FileService;
 import se.service.FileServiceImpl;
+
+import javax.validation.Valid;
 
 @Controller
 public class AdminController {
@@ -24,21 +27,27 @@ public class AdminController {
         return "admin/order";
     }
 
-    @GetMapping("/admin/update/{id}")
-    public String updateItemPage(@PathVariable("id") Integer id, //@RequestParam("user_id") int user_id,
+    @GetMapping("/admin/update/{files_id}")
+    public String updateItemPage(@PathVariable("files_id") Integer id, //@RequestParam("user_id") int user_id,
                                  Model model) {
         // id - file
-        model.addAttribute("file_id", id);
+        model.addAttribute("file", new File());
+        model.addAttribute("files_id", id);
         return "admin/update";
     }
 
-    @PostMapping("/admin/update/{id}")
+    @PostMapping("/admin/update/{files_id}")
     public String updateItem(@RequestParam("file_id") Integer id,
-                             @RequestParam("new_file_id") Integer new_file_id,
-                             @RequestParam(value = "name") String name,
-                             @RequestParam(value = "date") String date, Model model) {
+                             @Valid File file,
+                             Errors errors,
+                             Model model) {
 
-        fileRepository.update(id, new_file_id, name, date);
+        if(errors.hasErrors()){
+            model.addAttribute("files_id", id);
+            return "admin/update";
+        }
+
+        fileRepository.update(id, file.getUser_id(), file.getName(), file.getDate());
         model.addAttribute("files", fileRepository.getAll());
         model.addAttribute("users", users.getAll());
         return "admin/order";

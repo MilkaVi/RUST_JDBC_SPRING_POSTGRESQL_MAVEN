@@ -27,11 +27,8 @@
 </head>
 <body class="text-center">
 
-<form action="/" method="get">"
-    <input style=" float: right; border-radius: 10px;" class="btn btn-lg btn-primary btn-block" type="submit"
-           value="Sign Out"/>
-</form>
-<table>
+
+<table class="table">
     <thead class="thead-inverse">
     <tr>
         <form action="/admin/sort" method="get">
@@ -57,24 +54,47 @@
                th:href="@{/admin/delete/{id}(id=${file.getId()})}">Delete this file</a></td>
 
         <td><a class="btn btn-lg btn-primary btn-block" style=" border-radius: 10px;"
-               th:href="@{/admin/update/{id}(id=${file.getId()})}">Update this file</a></td>
+               th:href="@{/admin/update/{files_id}(files_id=${file.getId()})}">Update this file</a></td>
 
     </tr>
 
 </table>
 
-<form action="/admin/select">
-    <p>selecting files</p>
-    <label>Id</label>
-    <input type="text" name="file_id">
-    <label>Name</label>
-    <input type="text" name="name">
-    <label>Date</label>
-    <input type="text" name="date">
-    <p><input style=" border-radius: 10px; background-color: #6f42c1;" class="btn btn-lg btn-primary btn-block"
-              type="submit" value="search"></p>
-</form>
 
+<div class="container" align="center">
+    <form action="/admin/select" style="margin-top: 10px;">
+        <input type="hidden" name="user_id" th:value="${user_id}"/>
+
+        <div align="center" class="row">
+
+            <div class="col-md-3 mb-3">
+                <label>Id</label>
+                <input type="text" class="form-control" name="file_id">
+            </div>
+
+            <div class="col-md-3 mb-3">
+                <label>Name</label>
+                <input type="text" class="form-control" name="name">
+            </div>
+
+            <div class="col-md-3 mb-3">
+                <label>Date</label>
+                <input type="text" class="form-control" name="date">
+            </div>
+
+        </div>
+        <p><input class="btn btn-lg btn-primary btn-block" style=" border-radius: 10px; margin-top: 10px; "
+                  type="submit" value="search"></p>
+
+    </form>
+</div>
+
+<form action="/" method="get">
+    <input style=" float: right;
+    margin-left: -50%; margin-top: 10px;
+    border-radius: 10px; background-color: #6f42c1;" type="submit"
+           value="Sign Out"/>
+</form>
 </body>
 
 </html>
